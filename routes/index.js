@@ -16,13 +16,15 @@ router.get("/", function (req, res, next) {
       metadata.getMetadataForInstance("instance-id"),
       metadata.getMetadataForInstance("mac")
     ])
-      .spread(function (amiID, ipv4, az, instanceId) {
+      .spread(function (amiID, ipv4, az, instanceId, mac, hostname) {
         const data = {
           cores,
           amiID,
           ipv4,
           az,
-          instanceId
+          instanceId,
+          mac,
+          hostname
         };
         res.render("index", data);
       })
@@ -35,7 +37,9 @@ router.get("/", function (req, res, next) {
       amiID: "i-04d5ced80e4dd0bdf",
       ipv4: "13.57.31.141",
       az: "us-west-1b",
-      instanceId: "ami-0782017a917e973e7"
+      instanceId: "ami-0782017a917e973e7",
+      mac: "xxxx-xxxx-xxxx",
+      hostname: "xxxxxx"
     };
     res.render("index", data);
   }
