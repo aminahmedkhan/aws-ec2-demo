@@ -1,8 +1,130 @@
 body {
-  padding: 50px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  padding: 20px;
+  font-size: 12px;
+  background-color: #efefef;
+  font-family: "Roboto", sans-serif;
 }
 
 a {
-  color: #00B7FF;
+  color: #00b7ff;
+}
+
+.logo {
+  background: url("../assets/logo.png") no-repeat center;
+  width: 100%;
+  height: 200px;
+  margin: auto;
+}
+
+h1 {
+  font-family: "Lato", sans-serif;
+  text-shadow: 0px 0px 3px rgba(0, 0, 0, 0.432);
+  text-align: center;
+  font-size: 3em;
+  margin-top: 0;
+}
+
+.content {
+  display: flex;
+  justify-content: space-between;
+  width: 1220px;
+  margin: auto;
+}
+
+@media (max-width: 1350px) {
+  .content {
+    flex-direction: column;
+    width: 620px;
+  }
+
+  .options {
+    width: 620px;
+  }
+}
+
+.options {
+  margin: 0 10px;
+  flex: 1;
+  display: flex;
+  justify-content: space-between;
+}
+
+p {
+  box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.521);
+  padding: 10px 15px;
+  border-radius: 8px;
+  background-color: #fff;
+  cursor: pointer;
+}
+
+.cores button {
+  font-size: 1.2em;
+  display: block;
+  margin: 20px auto;
+  padding: 15px 30px;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  transition: 0.2s;
+  border-radius: 3px;
+  letter-spacing: 2px;
+}
+.cores button:hover {
+  background-color: #f8991d;
+  color: white;
+}
+.cores button:active {
+  opacity: 0.5;
+}
+
+/************************** Gauge ***********************/
+
+.gauge {
+  margin-top: 50px;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.GaugeMeter {
+  margin: 0 10px;
+  position: Relative;
+  text-align: Center;
+  overflow: Hidden;
+  cursor: Default;
+  display: inline-block;
+}
+
+.GaugeMeter span,
+.GaugeMeter b {
+  width: 54%;
+  position: Absolute;
+  text-align: Center;
+  display: Inline-Block;
+  color: RGBa(0, 0, 0, 0.8);
+  font-weight: 100;
+  font-family: "Open Sans", Arial;
+  overflow: Hidden;
+  white-space: NoWrap;
+  text-overflow: Ellipsis;
+  margin: 0 23%;
+}
+
+.GaugeMeter[data-style="Semi"] b {
+  width: 80%;
+  margin: 0 10%;
+}
+
+.GaugeMeter s,
+.GaugeMeter u {
+  text-decoration: None;
+  font-size: 0.6em;
+  font-weight: 200;
+  opacity: 0.6;
+}
+
+.GaugeMeter b {
+  color: #000;
+  font-weight: 200;
+  opacity: 0.8;
 }

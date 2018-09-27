@@ -5,23 +5,53 @@
   <title>
     <%= instanceId %>
   </title>
-  <link rel='stylesheet' href='/stylesheets/style.css' />
+  <link href="https://fonts.googleapis.com/css?family=Lato|Roboto" rel="stylesheet">
+  <link rel="stylesheet" href="../stylesheets/style.css">
 </head>
 
 <body>
+  <div class="logo"></div>
   <h1>Hello (AWS) World</h1>
-  <p>instance :
-    <%= instanceId %>
-  </p>
-  <p>Avalibilty zone :
-    <%= az %>
-  </p>
-  <p>ipv4 :
-    <%= ipv4 %>
-  </p>
-  <p>ami :
-    <%= amiID %>
-  </p>
+  <div class="content">
+    <div class="options">
+      <p>instance :
+        <%= instanceId %>
+      </p>
+      <p>Avalibilty zone :
+        <%= az %>
+      </p>
+      <p>ipv4 :
+        <%= ipv4 %>
+      </p>
+    </div>
+    <div class="options">
+      <p>ami :
+        <%= amiID %>
+      </p>
+      <p>mac :
+        <%= amiID %>
+      </p>
+      <p>hostname :
+        <%= amiID %>
+      </p>
+    </div>
+  </div>
+  <div class="cores">
+    <div class="gauge">
+      <% for(var i=0; i < cores; i++) { %>
+      <div class="GaugeMeter" data-size="150" data-label="Core <%= i+1 %>" data-percent="0" data-append="%" data-label="Percent"
+        data-color="#f8991d">
+      </div>
+      <% } %>
+    </div>
+    <button>Kill Me!</button>
+  </div>
+
+  <script src="//code.jquery.com/jquery-2.1.4.min.js"></script>
+  <script src="./js/GaugeMeter.js"></script>
+  <script>
+    $(".GaugeMeter").gaugeMeter();
+  </script>
 </body>
 
 </html>
