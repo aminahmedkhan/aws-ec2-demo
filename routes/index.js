@@ -14,7 +14,8 @@ router.get("/", function (req, res, next) {
       metadata.getMetadataForInstance("public-ipv4"),
       metadata.getMetadataForInstance("placement/availability-zone"),
       metadata.getMetadataForInstance("instance-id"),
-      metadata.getMetadataForInstance("mac")
+      metadata.getMetadataForInstance("mac"),
+      metadata.getMetadataForInstance("hostname")
     ])
       .spread(function (amiID, ipv4, az, instanceId, mac, hostname) {
         const data = {
