@@ -1,5 +1,5 @@
 body {
-  padding: 30px;
+  padding: 20px;
   font-size: 12px;
   background-color: #efefef;
   font-family: "Roboto", sans-serif;
@@ -55,4 +55,76 @@ p {
   border-radius: 8px;
   background-color: #fff;
   cursor: pointer;
+}
+
+.cores button {
+  font-size: 1.2em;
+  display: block;
+  margin: 20px auto;
+  padding: 15px 30px;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  transition: 0.2s;
+  border-radius: 3px;
+  letter-spacing: 2px;
+}
+.cores button:hover {
+  background-color: #f8991d;
+  color: white;
+}
+.cores button:active {
+  opacity: 0.5;
+}
+
+/************************** Gauge ***********************/
+
+.gauge {
+  margin-top: 50px;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.GaugeMeter {
+  margin: 0 10px;
+  position: Relative;
+  text-align: Center;
+  overflow: Hidden;
+  cursor: Default;
+  display: inline-block;
+}
+
+.GaugeMeter span,
+.GaugeMeter b {
+  width: 54%;
+  position: Absolute;
+  text-align: Center;
+  display: Inline-Block;
+  color: RGBa(0, 0, 0, 0.8);
+  font-weight: 100;
+  font-family: "Open Sans", Arial;
+  overflow: Hidden;
+  white-space: NoWrap;
+  text-overflow: Ellipsis;
+  margin: 0 23%;
+}
+
+.GaugeMeter[data-style="Semi"] b {
+  width: 80%;
+  margin: 0 10%;
+}
+
+.GaugeMeter s,
+.GaugeMeter u {
+  text-decoration: None;
+  font-size: 0.6em;
+  font-weight: 200;
+  opacity: 0.6;
+}
+
+.GaugeMeter b {
+  color: #000;
+  font-weight: 200;
+  opacity: 0.8;
 }

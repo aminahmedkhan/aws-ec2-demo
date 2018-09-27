@@ -36,6 +36,22 @@
       </p>
     </div>
   </div>
+  <div class="cores">
+    <div class="gauge">
+      <% for(var i=0; i < cores; i++) { %>
+      <div class="GaugeMeter" data-size="150" data-label="Core <%= i+1 %>" data-percent="0" data-append="%" data-label="Percent"
+        data-color="#f8991d">
+      </div>
+      <% } %>
+    </div>
+    <button>Kill Me!</button>
+  </div>
+
+  <script src="//code.jquery.com/jquery-2.1.4.min.js"></script>
+  <script src="./js/GaugeMeter.js"></script>
+  <script>
+    $(".GaugeMeter").gaugeMeter();
+  </script>
 </body>
 
 </html>
