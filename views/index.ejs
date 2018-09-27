@@ -7,6 +7,18 @@
   </title>
   <link href="https://fonts.googleapis.com/css?family=Lato|Roboto" rel="stylesheet">
   <link rel="stylesheet" href="../stylesheets/style.css">
+  <script src="./js/socket.io.js"></script>
+  <script>
+    var socket = io();
+    socket.on('cpu-stats-res', function (data) {
+      for (var i in data) {
+        $('#cpu-meter-' + i).gaugeMeter({ percent: data[i].value });
+      }
+    });
+    function killMe() {
+      socket.emit('kill-me');
+    }
+  </script>
 </head>
 
 <body>
@@ -39,12 +51,12 @@
   <div class="cores">
     <div class="gauge">
       <% for(var i=0; i < cores; i++) { %>
-      <div class="GaugeMeter" data-size="150" data-label="Core <%= i+1 %>" data-percent="0" data-append="%" data-label="Percent"
-        data-color="#f8991d">
+      <div id='cpu-meter-<%=i%>' class="GaugeMeter" data-animationstep="0" data-size="150" data-label="Core <%= i+1 %>"
+        data-append="%" data-label="Percent" data-color="#f8991d">
       </div>
       <% } %>
     </div>
-    <button>Kill Me!</button>
+    <button onclick="killMe()">Kill Me!</button>
   </div>
 
   <script src="//code.jquery.com/jquery-2.1.4.min.js"></script>

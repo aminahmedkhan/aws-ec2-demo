@@ -2,10 +2,12 @@ var express = require("express");
 var router = express.Router();
 var Q = require("q");
 var metadata = require("node-ec2-metadata");
+var os = require('os');
+const cores = parseInt(os.cpus().length);
 
-var isAWS = false;
+var isAWS = true;
 /* GET home page. */
-router.get("/", function(req, res, next) {
+router.get("/", function (req, res, next) {
   if (isAWS) {
     Q.all([
       metadata.getMetadataForInstance("ami-id"),
@@ -14,8 +16,9 @@ router.get("/", function(req, res, next) {
       metadata.getMetadataForInstance("instance-id"),
       metadata.getMetadataForInstance("mac")
     ])
-      .spread(function(amiID, ipv4, az, instanceId) {
+      .spread(function (amiID, ipv4, az, instanceId) {
         const data = {
+          cores,
           amiID,
           ipv4,
           az,
@@ -23,12 +26,12 @@ router.get("/", function(req, res, next) {
         };
         res.render("index", data);
       })
-      .fail(function(error) {
+      .fail(function (error) {
         console.log("Error: " + error);
       });
   } else {
     const data = {
-      cores: 4,
+      cores,
       amiID: "i-04d5ced80e4dd0bdf",
       ipv4: "13.57.31.141",
       az: "us-west-1b",

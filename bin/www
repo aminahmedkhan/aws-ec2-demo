@@ -7,6 +7,11 @@
 var app = require('../app');
 var debug = require('debug')('aws-ec2-demo:server');
 var http = require('http');
+var cpuStat = require('cpu-stat');
+var os = require('os');
+var Q = require('q');
+var exec = require('child_process').exec
+
 
 /**
  * Get port from environment and store in Express.
@@ -20,7 +25,7 @@ app.set('port', port);
  */
 
 var server = http.createServer(app);
-
+var io = require('socket.io')(server);
 /**
  * Listen on provided port, on all network interfaces.
  */
@@ -29,9 +34,44 @@ server.listen(port);
 server.on('error', onError);
 server.on('listening', onListening);
 
+io.on('connection', function (socket) {
+  socket.on('kill-me', function () {
+    console.log('Kill Me executed');
+    exec('yes > /dev/null &', (err, stdout, stderr) => {
+      if (err) {
+        console.log(err);
+        return;
+      }
+      console.log(`stdout: ${stdout}`);
+      console.log(`stderr: ${stderr}`);
+    });
+  });
+  setInterval(function () {
+    var promises = [];
+    const cores = parseInt(os.cpus().length);
+    for (var i = 0; i < cores; i++) {
+      promises.push(getCpuUsage(i));
+    }
+    Q.allSettled(promises).then(function (results) {
+      socket.emit('cpu-stats-res', results);
+    });
+  }, 1000);
+});
+
 /**
  * Normalize a port into a number, string, or false.
  */
+
+function getCpuUsage(coreIndex) {
+  return Q.Promise(function (resolve, reject) {
+    cpuStat.usagePercent({ coreIndex }, function (err, percent) {
+      if (err) {
+        return reject(err);
+      }
+      return resolve(percent);
+    });
+  });
+}
 
 function normalizePort(val) {
   var port = parseInt(val, 10);
