@@ -36,7 +36,7 @@ router.get("/", function (req, res, next) {
   } else {
     const data = {
       cores,
-      amiID: "13.57.230.27",
+      amiID: "ami-0782017a917e973e7",
       ipv4: "13.57.31.141",
       az: "us-west-1b",
       instanceId: "i-04d5ced80e4dd0bdf",
