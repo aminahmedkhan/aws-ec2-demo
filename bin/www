@@ -4,13 +4,14 @@
  * Module dependencies.
  */
 
-var app = require('../app');
+var app = require('../app').app;
+const myCache = require('../app').myCache;
 var debug = require('debug')('aws-ec2-demo:server');
 var http = require('http');
 var cpuStat = require('cpu-stat');
 var os = require('os');
 var Q = require('q');
-var exec = require('child_process').exec
+var exec = require('child_process').exec;
 
 
 /**
@@ -36,16 +37,30 @@ server.on('listening', onListening);
 
 io.on('connection', function (socket) {
   socket.on('kill-me', function () {
-    console.log('Kill Me executed');
-    exec('yes > /dev/null &', (err, stdout, stderr) => {
-      if (err) {
-        console.log(err);
-        return;
-      }
-      console.log(`stdout: ${stdout}`);
-      console.log(`stderr: ${stderr}`);
+    myCache.get("aliveCores", function (err, value) {
+      console.log(value);
+      myCache.set("aliveCores", --value, function (err, success) {
+        if (!err && success) {
+          console.log(success);
+        }
+      });
     });
+    console.log('Kill Me executed');
+    // exec('yes > /dev/null &', (err, stdout, stderr) => {
+    //   if (err) {
+    //     console.log(err);
+    //     return;
+    //   }
+    //   console.log(`stdout: ${stdout}`);
+    //   console.log(`stderr: ${stderr}`);
+    // });
   });
+  setTimeout(function () {
+    myCache.get("aliveCores", function (err, value) {
+      socket.emit('avilalbe-cores', value);
+    });
+  }, 1000);
+
   setInterval(function () {
     var promises = [];
     const cores = parseInt(os.cpus().length);

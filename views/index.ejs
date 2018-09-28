@@ -10,12 +10,23 @@
   <script src="./js/socket.io.js"></script>
   <script>
     var socket = io();
+    var avilalbeCores = 0;
     socket.on('cpu-stats-res', function (data) {
       for (var i in data) {
         $('#cpu-meter-' + i).gaugeMeter({ percent: data[i].value });
       }
     });
+    socket.on('avilalbe-cores', function (cores) {
+      avilalbeCores = cores;
+      console.log(cores);
+      if (cores > 0) {
+        document.getElementById("kill-switch").disabled = false;
+      } else {
+        document.getElementById("kill-switch").disabled = true;
+      }
+    });
     function killMe() {
+      console.log(--avilalbeCores);
       socket.emit('kill-me');
     }
   </script>
@@ -56,7 +67,7 @@
       </div>
       <% } %>
     </div>
-    <button onclick="killMe()">Kill Me!</button>
+    <button id="kill-switch" disabled="true" onclick="killMe()">Kill Me!</button>
   </div>
 
   <script src="//code.jquery.com/jquery-2.1.4.min.js"></script>

@@ -3,6 +3,16 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
+const NodeCache = require("node-cache");
+const myCache = new NodeCache();
+var os = require('os');
+
+myCache.set("aliveCores", os.cpus().length, function (err, success) {
+  if (!err && success) {
+    console.log(success);
+    console.log('saved');
+  }
+});
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
@@ -38,4 +48,4 @@ app.use(function (err, req, res, next) {
   res.render('error');
 });
 
-module.exports = app;
+module.exports = { app, myCache };
