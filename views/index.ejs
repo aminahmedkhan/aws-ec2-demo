@@ -11,32 +11,45 @@
   <script>
     var socket = io();
     var avilalbeCores = 0;
+
+    const checkBtnDisable = (avilalbeCores) => {
+      const btn = document.getElementById('kill-switch');
+      const body = document.getElementById("blink");
+      if (avilalbeCores > 0) {
+        btn.disabled = false;
+        body.classList.remove("bodyRed");
+      } else {
+        btn.disabled = true;
+        body.classList.add("bodyRed");
+      }
+    }
+
     socket.on('cpu-stats-res', function (data) {
       for (var i in data) {
-        $('#cpu-meter-' + i).gaugeMeter({ percent: data[i].value });
+        $('#cpu-meter-' + i).gaugeMeter({
+          percent: data[i].value
+        });
       }
     });
     socket.on('avilalbe-cores', function (cores) {
       avilalbeCores = cores;
       console.log(avilalbeCores);
-      if (avilalbeCores <= 0) {
-        document.getElementById("kill-switch").disabled = false;
-      } else {
-        document.getElementById("kill-switch").disabled = true;
-      }
+      checkBtnDisable(avilalbeCores);
     });
+
     function killMe() {
       console.log(--avilalbeCores);
+      checkBtnDisable(avilalbeCores);
       socket.emit('kill-me');
     }
   </script>
 </head>
 
-<body>
+<body id="blink">
   <div class="logo"></div>
   <h1>Hello (AWS) World</h1>
   <div class="content">
-    <div class="options">
+    <div class="options one">
       <p>instance :
         <%= instanceId %>
       </p>
@@ -47,7 +60,7 @@
         <%= ipv4 %>
       </p>
     </div>
-    <div class="options">
+    <div class="options two">
       <p>ami :
         <%= amiID %>
       </p>
@@ -67,7 +80,7 @@
       </div>
       <% } %>
     </div>
-    <button id="kill-switch" disabled="true" onclick="killMe()">Kill Me!</button>
+    <button id="kill-switch" disabled onclick="killMe()">Kill Me!</button>
   </div>
 
   <script src="//code.jquery.com/jquery-2.1.4.min.js"></script>

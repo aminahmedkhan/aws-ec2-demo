@@ -27,7 +27,7 @@ h1 {
 .content {
   display: flex;
   justify-content: space-between;
-  width: 1220px;
+  width: 1150px;
   margin: auto;
 }
 
@@ -36,17 +36,20 @@ h1 {
     flex-direction: column;
     width: 620px;
   }
-
-  .options {
-    width: 620px;
-  }
 }
 
 .options {
-  margin: 0 10px;
-  flex: 1;
   display: flex;
   justify-content: space-between;
+  margin: auto;
+}
+
+.one {
+  width: 530px;
+}
+
+.two {
+  width: 600px;
 }
 
 p {
@@ -69,12 +72,34 @@ p {
   border-radius: 3px;
   letter-spacing: 2px;
 }
+
 .cores button:hover {
   background-color: #f8991d;
   color: white;
 }
+
 .cores button:active {
   opacity: 0.5;
+}
+
+button:disabled,
+button[disabled],
+button[disabled]:hover {
+  border: 1px solid #999999;
+  background-color: #cccccc;
+  color: #666666;
+  cursor: initial;
+}
+
+.bodyRed {
+  animation: blink 1s alternate infinite;
+  animation-timing-function: linear;
+}
+
+@keyframes blink {
+  100% {
+    background: #ffdddd;
+  }
 }
 
 /************************** Gauge ***********************/
