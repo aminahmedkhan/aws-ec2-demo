@@ -35,12 +35,12 @@ router.get("/", function (req, res, next) {
   } else {
     const data = {
       cores,
-      amiID: "i-04d5ced80e4dd0bdf",
+      amiID: "13.57.230.27",
       ipv4: "13.57.31.141",
       az: "us-west-1b",
-      instanceId: "ami-0782017a917e973e7",
-      instanceType: "xxxx-xxxx-xxxx",
-      hostname: "xxxxxx"
+      instanceId: "i-04d5ced80e4dd0bdf",
+      instanceType: "m5.2xlarge",
+      hostname: "ip-172-31-21-19.us-west-1.compute.internal"
     };
     res.render("index", data);
   }
