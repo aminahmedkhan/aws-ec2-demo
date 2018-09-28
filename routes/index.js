@@ -14,17 +14,17 @@ router.get("/", function (req, res, next) {
       metadata.getMetadataForInstance("public-ipv4"),
       metadata.getMetadataForInstance("placement/availability-zone"),
       metadata.getMetadataForInstance("instance-id"),
-      metadata.getMetadataForInstance("mac"),
+      metadata.getMetadataForInstance("instance-type"),
       metadata.getMetadataForInstance("hostname")
     ])
-      .spread(function (amiID, ipv4, az, instanceId, mac, hostname) {
+      .spread(function (amiID, ipv4, az, instanceId, instanceType, hostname) {
         const data = {
           cores,
           amiID,
           ipv4,
           az,
           instanceId,
-          mac,
+          instanceType,
           hostname
         };
         res.render("index", data);
@@ -39,7 +39,7 @@ router.get("/", function (req, res, next) {
       ipv4: "13.57.31.141",
       az: "us-west-1b",
       instanceId: "ami-0782017a917e973e7",
-      mac: "xxxx-xxxx-xxxx",
+      instanceType: "xxxx-xxxx-xxxx",
       hostname: "xxxxxx"
     };
     res.render("index", data);
