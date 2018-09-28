@@ -92,7 +92,8 @@ button[disabled]:hover {
 }
 
 .bodyRed {
-  animation: blink 0.7s alternate-reverse infinite;
+  animation: blink 1s alternate infinite;
+  animation-timing-function: linear;
 }
 
 @keyframes blink {
