@@ -143,4 +143,7 @@ function onListening() {
     : 'port ' + addr.port;
   debug('Listening on ' + bind);
   console.log('Server running on ' + bind);
+  console.log(process.env)
+  console.log(process.env.hostname);
+  console.log(process.env.host);
 }
