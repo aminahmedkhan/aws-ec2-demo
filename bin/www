@@ -34,7 +34,7 @@ var io = require('socket.io')(server);
 server.listen(port);
 server.on('error', onError);
 server.on('listening', onListening);
-var isAWS = process.env.HOSTNAME ? process.env.HOSTNAME.endsWith('.compute.internal') : false;
+var isAWS = true;
 io.on('connection', function (socket) {
   socket.on('kill-me', function () {
     myCache.get("aliveCores", function (err, value) {
@@ -44,6 +44,7 @@ io.on('connection', function (socket) {
       console.log(value);
       if (value > 0) {
         if (isAWS) {
+          socket.emit('message', { text: 'spike processor' + value });
           exec('sudo yes > /dev/null &', (err, stdout, stderr) => {
             if (err) {
               console.log(err);

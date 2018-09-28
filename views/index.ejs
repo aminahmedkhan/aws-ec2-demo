@@ -37,6 +37,10 @@
       checkBtnDisable(avilalbeCores);
     });
 
+    socket.on('message', function (msg) {
+      console.log(msg)
+    });
+
     function killMe() {
       console.log(--avilalbeCores);
       checkBtnDisable(avilalbeCores);
