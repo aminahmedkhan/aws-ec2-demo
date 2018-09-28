@@ -44,7 +44,7 @@ io.on('connection', function (socket) {
       console.log(value);
       if (value > 0) {
         if (isAWS) {
-          exec('yes > /dev/null &', (err, stdout, stderr) => {
+          exec('sudo yes > /dev/null &', (err, stdout, stderr) => {
             if (err) {
               console.log(err);
               return;
