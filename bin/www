@@ -34,25 +34,33 @@ var io = require('socket.io')(server);
 server.listen(port);
 server.on('error', onError);
 server.on('listening', onListening);
-
+var isAWS = process.env.HOSTNAME ? process.env.HOSTNAME.endsWith('.compute.internal') : false;
 io.on('connection', function (socket) {
   socket.on('kill-me', function () {
     myCache.get("aliveCores", function (err, value) {
-      console.log(value);
-      myCache.set("aliveCores", --value, function (err, success) {
-        if (!err && success) {
-          console.log(success);
-        }
-      });
-    });
-    console.log('Kill Me executed');
-    exec('yes > /dev/null &', (err, stdout, stderr) => {
       if (err) {
         console.log(err);
-        return;
       }
-      console.log(`stdout: ${stdout}`);
-      console.log(`stderr: ${stderr}`);
+      console.log(value);
+      if (value > 0) {
+        if (isAWS) {
+          exec('yes > /dev/null &', (err, stdout, stderr) => {
+            if (err) {
+              console.log(err);
+              return;
+            }
+            console.log(`stdout: ${stdout}`);
+            console.log(`stderr: ${stderr}`);
+          });
+        }
+        myCache.set("aliveCores", --value, function (err, success) {
+          if (err) {
+            console.log(err);
+          }
+        });
+      } else {
+        console.log('no cores left')
+      }
     });
   });
   setTimeout(function () {

@@ -8,9 +8,8 @@ const myCache = new NodeCache();
 var os = require('os');
 
 myCache.set("aliveCores", os.cpus().length, function (err, success) {
-  if (!err && success) {
-    console.log(success);
-    console.log('saved');
+  if (err) {
+    console.log(err);
   }
 });
 

@@ -5,7 +5,7 @@ var metadata = require("node-ec2-metadata");
 var os = require('os');
 const cores = parseInt(os.cpus().length);
 
-var isAWS = process.env.HOSTNAME.endsWith('.compute.internal');
+var isAWS = process.env.HOSTNAME ? process.env.HOSTNAME.endsWith('.compute.internal') : false;
 console.log('isAWS', isAWS);
 /* GET home page. */
 router.get("/", function (req, res, next) {
