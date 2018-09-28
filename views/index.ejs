@@ -18,8 +18,8 @@
     });
     socket.on('avilalbe-cores', function (cores) {
       avilalbeCores = cores;
-      console.log(cores);
-      if (cores > 0) {
+      console.log(avilalbeCores);
+      if (avilalbeCores <= 0) {
         document.getElementById("kill-switch").disabled = false;
       } else {
         document.getElementById("kill-switch").disabled = true;
